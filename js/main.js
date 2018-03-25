@@ -10,6 +10,7 @@ class Constructor {
         let row = $('div.row', {}, container);
         new Inventory($('div.col-sm-fluid', {}, row));
         new Combinator($('div.col-sm', {}, row));
+        $('a', {innerHTML: 'Sources on GitHub', href: 'https://github.com/Cjkjvfnby/make_me'}, container);
     }
 }
 
