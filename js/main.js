@@ -35,12 +35,12 @@ class Bag {
             ev.dataTransfer.setData("type", ev.target.image_type);
         }
 
-        imageList.map(path => $('img.img-thumbnail.rounded', {
+        imageList.map(path => $('img.img-thumbnail.rounded.draggable', {
             src: path,
             width: IMAGE_WIDTH / 4,
             draggable: true,
             ondragstart: drag,
-            image_type: type
+            image_type: type,
         }, pane));
     }
 
