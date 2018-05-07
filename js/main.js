@@ -29,17 +29,15 @@ class Bag {
         $('button.btn.btn-info.col-sm', {type: 'button', innerText: text}, parent);
         let pane = $('div.col-sm', {hidden: false}, parent);
 
-        function drag(ev) {
-            console.log('Drag start', ev.target);
-            ev.dataTransfer.setData("path", ev.target.src);
-            ev.dataTransfer.setData("type", ev.target.image_type);
-        }
-
         imageList.map(path => $('img.img-thumbnail.rounded.draggable', {
             src: path,
             width: IMAGE_WIDTH / 4,
             draggable: true,
-            ondragstart: drag,
+            ondragstart: (e) => {
+                console.log('Drag start', e.target);
+                e.dataTransfer.setData("path", e.target.src);
+                e.dataTransfer.setData("type", e.target.image_type);
+            },
             image_type: type,
         }, pane));
     }
@@ -68,27 +66,24 @@ class Section {
     constructor(name, parent, type, height) {
         let box = $('div.row.d-flex', {}, parent);
 
-        function drop(ev) {
-            ev.preventDefault();
-            let src = ev.dataTransfer.getData("path");
-            let type = ev.dataTransfer.getData("type");
-            if (type === ev.target.image_type) {
-                ev.target.src = src;
-            }
-            else {
-                alert("Не туда!")
-            }
-        }
-
-
         $('img.border.border-wide.border-dark',
             {
                 alt: name,
                 src: '/img/empty',
                 width: IMAGE_WIDTH,
                 height: height,
-                ondrop: drop,
-                ondragover: (ev) => ev.preventDefault(),
+                ondrop: (e) => {
+                    e.preventDefault();
+                    let src = e.dataTransfer.getData("path");
+                    let type = e.dataTransfer.getData("type");
+                    if (type === e.target.image_type) {
+                        e.target.src = src;
+                    }
+                    else {
+                        alert("Не туда!")
+                    }
+                },
+                ondragover: (e) => e.preventDefault(),
                 image_type: type
             }, box);
     }
